@@ -1,0 +1,6 @@
+{
+  "name": "Estúdio C — Plataforma Visual de Programação em C",
+  "description": "Plataforma interativa para estudar, visualizar memória e memorizar fundamentos de computação, algoritmos e linguagem C completa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
