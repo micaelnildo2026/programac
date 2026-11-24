@@ -10,9 +10,15 @@ import { TopicWorkspace } from './components/TopicWorkspace';
 import { OverviewRoadmap } from './components/OverviewRoadmap';
 import { MemorizeView } from './components/MemorizeView';
 import { QuizView } from './components/QuizView';
+import { CodePlaygroundView } from './components/CodePlaygroundView';
 import { Menu, X } from 'lucide-react';
 
-type ActiveSection = 'trilha' | 'laboratorios' | 'memorizar' | 'desafios';
+type ActiveSection =
+  | 'trilha'
+  | 'laboratorios'
+  | 'memorizar'
+  | 'desafios'
+  | 'compilador';
 
 const STORAGE_COMPLETED_KEY = 'estudio_c_completed_topics_v1';
 const STORAGE_CARDS_KEY = 'estudio_c_flashcards_v1';
@@ -138,6 +144,7 @@ export default function App() {
     { id: 'laboratorios', label: 'Laboratórios' },
     { id: 'memorizar', label: 'Memorizar' },
     { id: 'desafios', label: 'Desafios' },
+    { id: 'compilador', label: 'Compilador' },
   ];
 
   return (
@@ -244,6 +251,7 @@ export default function App() {
             onSelectTopic={handleSelectTopic}
             onOpenMemorize={() => setSection('memorizar')}
             onOpenQuiz={() => setSection('desafios')}
+            onOpenCompiler={() => setSection('compilador')}
           />
         )}
 
@@ -302,6 +310,8 @@ export default function App() {
         {section === 'desafios' && (
           <QuizView onSelectTopic={handleSelectTopic} />
         )}
+
+        {section === 'compilador' && <CodePlaygroundView />}
       </main>
 
       <footer className="border-t border-slate-200 bg-white py-5">

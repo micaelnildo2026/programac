@@ -10,6 +10,7 @@ interface OverviewRoadmapProps {
   onSelectTopic: (topicId: string) => void;
   onOpenMemorize: () => void;
   onOpenQuiz: () => void;
+  onOpenCompiler: () => void;
 }
 
 export function OverviewRoadmap({
@@ -20,6 +21,7 @@ export function OverviewRoadmap({
   onSelectTopic,
   onOpenMemorize,
   onOpenQuiz,
+  onOpenCompiler,
 }: OverviewRoadmapProps) {
   const completedSet = new Set(completedTopicIds);
 
@@ -34,7 +36,7 @@ export function OverviewRoadmap({
             Domine a linguagem C vendo o que acontece na memória
           </h1>
           <p className="max-w-2xl text-base leading-relaxed text-slate-600">
-            Cada subtópico combina teoria direta, simulador visual interativo de bits, laços, pilha de chamadas, ponteiros e arquivos, além de flashcards espaçados para fixação.
+            Cada subtópico combina teoria direta, simulador visual interativo de bits, laços, pilha de chamadas, ponteiros e arquivos, além de flashcards espaçados e compilador C real.
           </p>
           <div className="flex flex-wrap gap-3 pt-2">
             <button
@@ -47,17 +49,24 @@ export function OverviewRoadmap({
             </button>
             <button
               type="button"
-              onClick={onOpenMemorize}
-              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
-            >
-              Revisar flashcards
-            </button>
-            <button
-              type="button"
               onClick={onOpenQuiz}
               className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
             >
               Resolver desafios
+            </button>
+            <button
+              type="button"
+              onClick={onOpenCompiler}
+              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+            >
+              Compilador C
+            </button>
+            <button
+              type="button"
+              onClick={onOpenMemorize}
+              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+            >
+              Revisar flashcards
             </button>
           </div>
         </div>
