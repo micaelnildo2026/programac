@@ -1,6 +1,6 @@
 import React from 'react';
 import { CURRICULUM } from '../data/curriculum';
-import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, FileDown } from 'lucide-react';
 
 interface OverviewRoadmapProps {
   completedTopicIds: string[];
@@ -11,6 +11,7 @@ interface OverviewRoadmapProps {
   onOpenMemorize: () => void;
   onOpenQuiz: () => void;
   onOpenCompiler: () => void;
+  onOpenExamPdf: () => void;
 }
 
 export function OverviewRoadmap({
@@ -22,6 +23,7 @@ export function OverviewRoadmap({
   onOpenMemorize,
   onOpenQuiz,
   onOpenCompiler,
+  onOpenExamPdf,
 }: OverviewRoadmapProps) {
   const completedSet = new Set(completedTopicIds);
 
@@ -42,7 +44,7 @@ export function OverviewRoadmap({
             <button
               type="button"
               onClick={() => onSelectTopic('1.1')}
-              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 transition-colors whitespace-nowrap shrink-0"
             >
               Explorar laboratórios
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -50,23 +52,31 @@ export function OverviewRoadmap({
             <button
               type="button"
               onClick={onOpenQuiz}
-              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
             >
               Resolver desafios
             </button>
             <button
               type="button"
               onClick={onOpenCompiler}
-              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
             >
               Compilador C
             </button>
             <button
               type="button"
               onClick={onOpenMemorize}
-              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors"
+              className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
             >
               Revisar flashcards
+            </button>
+            <button
+              type="button"
+              onClick={onOpenExamPdf}
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
+            >
+              <FileDown className="h-4 w-4 text-blue-600" aria-hidden="true" />
+              Gerar PDF para prova
             </button>
           </div>
         </div>

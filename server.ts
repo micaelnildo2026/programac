@@ -4,7 +4,6 @@ import fs from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
-import { createServer as createViteServer } from 'vite';
 
 const execFileAsync = promisify(execFile);
 
@@ -17,6 +16,12 @@ const RUN_TIMEOUT_MS = 2500;
 interface CompileRunPayload {
   code?: unknown;
   stdin?: unknown;
+}
+
+class CompilerUnavailableError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
 }
 
 async function compileAndRunC(code: string, stdinInput: string) {
@@ -51,10 +56,14 @@ async function compileAndRunC(code: string, stdinInput: string) {
       compilerWarnings = stderr ? String(stderr) : '';
     } catch (err: unknown) {
       const compileErr = err as {
+        code?: string;
         stderr?: string;
         stdout?: string;
         message?: string;
       };
+      if (compileErr.code === 'ENOENT') {
+        throw new CompilerUnavailableError('GCC_UNAVAILABLE');
+      }
       const rawStderr =
         compileErr.stderr || compileErr.stdout || compileErr.message || 'Erro de compilação';
       const cleanedStderr = String(rawStderr).replaceAll(sourcePath, 'main.c');
@@ -178,7 +187,11 @@ async function startServer() {
     try {
       const result = await compileAndRunC(body.code, stdinInput);
       res.json(result);
-    } catch {
+    } catch (err) {
+      if (err instanceof CompilerUnavailableError) {
+        res.status(503).json({ error: 'GCC_UNAVAILABLE' });
+        return;
+      }
       res.status(500).json({
         error: 'Não foi possível executar o compilador C no momento.',
       });
@@ -187,6 +200,7 @@ async function startServer() {
 
   const isProd = process.env.NODE_ENV === 'production';
   if (!isProd) {
+    const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',

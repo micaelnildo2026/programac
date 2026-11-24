@@ -11,6 +11,7 @@ import { OverviewRoadmap } from './components/OverviewRoadmap';
 import { MemorizeView } from './components/MemorizeView';
 import { QuizView } from './components/QuizView';
 import { CodePlaygroundView } from './components/CodePlaygroundView';
+import { ExamPdfModal } from './components/ExamPdfModal';
 import { Menu, X } from 'lucide-react';
 
 type ActiveSection =
@@ -62,6 +63,7 @@ export default function App() {
   });
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [examPdfModalOpen, setExamPdfModalOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -252,6 +254,7 @@ export default function App() {
             onOpenMemorize={() => setSection('memorizar')}
             onOpenQuiz={() => setSection('desafios')}
             onOpenCompiler={() => setSection('compilador')}
+            onOpenExamPdf={() => setExamPdfModalOpen(true)}
           />
         )}
 
@@ -304,15 +307,24 @@ export default function App() {
             cardProgress={cardProgress}
             onRateCard={handleRateCard}
             onResetProgress={handleResetCards}
+            onOpenExamPdf={() => setExamPdfModalOpen(true)}
           />
         )}
 
         {section === 'desafios' && (
-          <QuizView onSelectTopic={handleSelectTopic} />
+          <QuizView
+            onSelectTopic={handleSelectTopic}
+            onOpenExamPdf={() => setExamPdfModalOpen(true)}
+          />
         )}
 
         {section === 'compilador' && <CodePlaygroundView />}
       </main>
+
+      <ExamPdfModal
+        isOpen={examPdfModalOpen}
+        onClose={() => setExamPdfModalOpen(false)}
+      />
 
       <footer className="border-t border-slate-200 bg-white py-5">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4 px-4 text-xs text-slate-500 sm:px-6">

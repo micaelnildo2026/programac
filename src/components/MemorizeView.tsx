@@ -6,18 +6,20 @@ import {
   type ProgressMap,
   type RecallQuality,
 } from '../utils/spacedRepetition';
-import { CheckCircle2, RotateCw } from 'lucide-react';
+import { CheckCircle2, FileDown, RotateCw } from 'lucide-react';
 
 interface MemorizeViewProps {
   cardProgress: ProgressMap;
   onRateCard: (cardId: string, updated: ProgressMap[string]) => void;
   onResetProgress: () => void;
+  onOpenExamPdf?: () => void;
 }
 
 export function MemorizeView({
   cardProgress,
   onRateCard,
   onResetProgress,
+  onOpenExamPdf,
 }: MemorizeViewProps) {
   const [selectedModule, setSelectedModule] = useState<string>('all');
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -82,6 +84,16 @@ export function MemorizeView({
           >
             Zerar revisões
           </button>
+          {onOpenExamPdf && (
+            <button
+              type="button"
+              onClick={onOpenExamPdf}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
+            >
+              <FileDown className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
+              Gerar PDF para prova
+            </button>
+          )}
         </div>
       </div>
 

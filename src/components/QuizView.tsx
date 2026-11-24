@@ -14,6 +14,7 @@ import {
   CheckCircle2,
   ChevronDown,
   ChevronUp,
+  FileDown,
   Play,
   RotateCcw,
   Terminal,
@@ -22,11 +23,12 @@ import {
 
 interface QuizViewProps {
   onSelectTopic?: (topicId: string) => void;
+  onOpenExamPdf?: () => void;
 }
 
 type DifficultyFilter = 'all' | QuestionDifficulty;
 
-export function QuizView({ onSelectTopic }: QuizViewProps) {
+export function QuizView({ onSelectTopic, onOpenExamPdf }: QuizViewProps) {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<DifficultyFilter>('all');
   const [selectedModule, setSelectedModule] = useState<string>('all');
@@ -181,6 +183,16 @@ export function QuizView({ onSelectTopic }: QuizViewProps) {
             <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
             Refazer
           </button>
+          {onOpenExamPdf && (
+            <button
+              type="button"
+              onClick={onOpenExamPdf}
+              className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-semibold text-slate-800 hover:bg-slate-50 transition-colors whitespace-nowrap shrink-0"
+            >
+              <FileDown className="h-3.5 w-3.5 text-blue-600" aria-hidden="true" />
+              Gerar PDF para prova
+            </button>
+          )}
         </div>
       </div>
 
@@ -477,7 +489,7 @@ export function QuizView({ onSelectTopic }: QuizViewProps) {
 
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-xs text-slate-500">
-                Dica: use Tab para indentar e Ctrl+Enter para compilar com GCC.
+                Dica: use Tab para indentar e Ctrl+Enter para compilar e executar.
               </span>
               <button
                 type="button"
@@ -487,7 +499,7 @@ export function QuizView({ onSelectTopic }: QuizViewProps) {
               >
                 <Play className="h-3.5 w-3.5" aria-hidden="true" />
                 {currentRun?.running
-                  ? 'Compilando no GCC...'
+                  ? 'Compilando e executando...'
                   : 'Compilar e verificar código'}
               </button>
             </div>
